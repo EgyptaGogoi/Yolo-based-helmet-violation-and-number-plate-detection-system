@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { YoloModule } from './yolo/yolo.module';
 import { ConfigModule } from '@nestjs/config';
+import { OcrModule } from './ocr/ocr.module';
 
 @Module({
   imports: [
@@ -10,7 +11,8 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ['.development.env']
-    })
+    }),
+    OcrModule
   ],
   controllers: [AppController],
   providers: [AppService],

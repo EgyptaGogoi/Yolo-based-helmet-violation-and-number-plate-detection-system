@@ -19,8 +19,8 @@ export class DetectRiderService {
             });
 
             
-            // return response.data
-            return this.cropRider.cropRiders(imageUrl,response.data.predictions); // Return the detection result
+            return response.data
+            // return this.cropRider.cropRiders(imageUrl,response.data.predictions); // Return the detection result
         } catch (error) {
             // Handle errors gracefully and throw NestJS-friendly exceptions
             return error;

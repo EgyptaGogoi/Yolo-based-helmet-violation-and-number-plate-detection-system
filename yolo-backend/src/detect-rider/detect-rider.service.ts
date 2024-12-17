@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { CropRiderService } from 'src/crop-rider/crop-rider.service';
 
 @Injectable()
 export class DetectRiderService {
 
-    constructor(private readonly cropRider: CropRiderService ){}
+    constructor( ){}
 
     async detect_rider(imageUrl: string): Promise<any>{
         try {

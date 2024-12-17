@@ -9,7 +9,7 @@ export class UploadController {
     @Post('from-url')
     async uploadFromUrl(@Body('fileUrl') fileUrl: string) {
         // const filename = fileUrl.split('/').pop();
-        const filename = "testImage1";
+        const filename = "image.jpg";
         if (!filename) {
         throw new Error('Invalid file URL');
         }

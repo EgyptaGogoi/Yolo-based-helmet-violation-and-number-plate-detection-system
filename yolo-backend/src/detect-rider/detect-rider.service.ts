@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
+import { ImageProcessingService } from 'src/image-processing/image-processing.service';
 
 @Injectable()
 export class DetectRiderService {
 
-    constructor( ){}
+    constructor( private readonly imageProcessingService: ImageProcessingService ){}
 
     async detect_rider(imageUrl: string): Promise<any>{
         try {
@@ -18,7 +19,8 @@ export class DetectRiderService {
             });
 
             
-            return response.data
+            return response.data.predictions
+            // return this.imageProcessingService.cropImageFromData(response.data.predictions)
             // return this.cropRider.cropRiders(imageUrl,response.data.predictions); // Return the detection result
         } catch (error) {
             // Handle errors gracefully and throw NestJS-friendly exceptions

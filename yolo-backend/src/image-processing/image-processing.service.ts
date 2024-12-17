@@ -2,12 +2,16 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 import * as fs from 'fs';
 import * as path from 'path';
 import * as sharp from 'sharp';
+import { DetectViolationService } from 'src/detect-violation/detect-violation.service';
 
 @Injectable()
 export class ImageProcessingService {
   private readonly croppedImageFolder = path.join('D:\\mca\\project\\yolo-backend\\croped-Image'); // Target folder for cropped images
 
-  async cropImageFromData(fileName: string, boundingBoxes: any[]) {
+  // constructor(private readonly detectViolationService: DetectViolationService){}
+
+  async cropImageFromData(boundingBoxes: any[]) {
+    const fileName = "image.jpg"
     const imagePath = path.join('D:\\mca\\project\\yolo-backend\\uploads', fileName);
 
     // Check if the file exists

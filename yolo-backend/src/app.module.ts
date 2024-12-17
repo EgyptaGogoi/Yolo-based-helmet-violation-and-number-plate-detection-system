@@ -6,6 +6,7 @@ import { DetectRiderModule } from './detect-rider/detect-rider.module';
 import { DetectViolationModule } from './detect-violation/detect-violation.module';
 import { OcrModule } from './ocr/ocr.module';
 import { ImageProcessingModule } from './image-processing/image-processing.module';
+import { DriverModule } from './driver/driver.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ImageProcessingModule } from './image-processing/image-processing.modul
     DetectViolationModule,
     OcrModule,
     ImageProcessingModule,
+    DriverModule,
   ],
   controllers: [AppController],
   providers: [AppService],

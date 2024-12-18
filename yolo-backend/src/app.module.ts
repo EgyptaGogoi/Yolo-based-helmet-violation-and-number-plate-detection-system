@@ -7,6 +7,8 @@ import { DetectViolationModule } from './detect-violation/detect-violation.modul
 import { OcrModule } from './ocr/ocr.module';
 import { ImageProcessingModule } from './image-processing/image-processing.module';
 import { DriverModule } from './driver/driver.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -16,6 +18,10 @@ import { DriverModule } from './driver/driver.module';
     OcrModule,
     ImageProcessingModule,
     DriverModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'croped-Image'), // This should be the relative path to the directory
+      serveRoot: '/images', // The route prefix for serving the files
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

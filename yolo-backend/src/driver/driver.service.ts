@@ -25,7 +25,8 @@ export class DriverService {
         // // detect rider
         const detect_riders_prediction = await this.detectRiderService.detect_rider(imageUrl)
         // // imageProcessing
-        const images_paths = await this.imageProcessingService.cropImageFromData(detect_riders_prediction)
+        const images_paths = await this.imageProcessingService.cropImageFromDataUrl(detect_riders_prediction,imageUrl)
+        // const images_paths = await this.imageProcessingService.cropImageFromData(detect_riders_prediction)
         // // detect violation
         return this.detectViolationService.detectViolation(images_paths.paths)
     }

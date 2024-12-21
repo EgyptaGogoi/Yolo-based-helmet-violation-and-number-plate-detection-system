@@ -55,7 +55,7 @@ export default function InputUrl() {
   };
 
   return (
-    <div className="w-screen p-6 flex flex-col items-center">
+    <div className="w-screen p-6 flex flex-col items-center mb-52">
       <p className="font-bold text-2xl text-slate-900 mb-4">Enter Your Image Url</p>
 
       <input

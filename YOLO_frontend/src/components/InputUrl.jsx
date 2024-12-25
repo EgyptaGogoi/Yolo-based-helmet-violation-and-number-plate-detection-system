@@ -3,9 +3,10 @@ import axios from "axios";
 
 export default function InputUrl() {
   const [url, setUrl] = useState("");
-  const [sub, setSub] = useState([]);
+  const [response, setResponse] = useState([]);
   const [image, setImage] = useState(null);
   const [error, setError] = useState("");
+  const [disable, setDisable] = useState(false)
 
   function handleChange(e) {
     setUrl(e.target.value);
@@ -13,31 +14,37 @@ export default function InputUrl() {
   }
 
   async function Submit() {
-    if (!url) {
-      setError("Please enter a valid image URL.");
-      return;
-    }
-    setError(""); // Clear previous error message
+    
+    setDisable(true)
 
+    
     try {
+      if (!url) {
+        setError("Please enter a valid image URL.");
+        throw new Error("Please enter a valid image URL.");
+      }
+      setError(""); // Clear previous error message
+
       const result = await axios.post("http://localhost:3000/driver/byUrl", {
         img: url,
       });
 
-      console.log(result);
-      setSub(result.data); // Set the API response to the sub state
+      setResponse(result.data); // Set the API response to the response state
       setImage(url); // Set the image URL to preview it
 
     } catch (err) {
       console.error("Error:", err.message);
       setError(err.message);
+    } finally {
+      setDisable(false)
     }
   }
 
   // Helper function to determine violation status
-  const getViolationStatus = (predictions) => {
+  const getViolationStatus = async(predictions) => {
     let helmetViolation = "No Violation";
     let numberPlate = "No Plate Detected";
+    
 
     predictions.forEach((prediction) => {
       if (prediction.class === "with helmet") {
@@ -45,7 +52,6 @@ export default function InputUrl() {
       } else if (prediction.class === "without helmet") {
         helmetViolation = "Violated";
       }
-
       if (prediction.class === "Number Plate") {
         numberPlate = "Detected";
       }
@@ -53,6 +59,8 @@ export default function InputUrl() {
 
     return { helmetViolation, numberPlate };
   };
+
+  
 
   return (
     <div className="w-screen p-6 flex flex-col items-center mb-52">
@@ -69,7 +77,9 @@ export default function InputUrl() {
       <button
         type="submit"
         onClick={Submit}
-        className="bg-cyan-500 text-white font-semibold py-2 px-6 rounded-md shadow-md hover:bg-cyan-600 transition duration-200 ease-in-out mb-4"
+        className={disable? "text-white font-semibold py-2 px-6 rounded-md shadow-md bg-cyan-200 transition duration-200 ease-in-out mb-4 cursor-not-allowed"
+          :
+          "bg-cyan-500 text-white font-semibold py-2 px-6 rounded-md shadow-md hover:bg-cyan-600 transition duration-200 ease-in-out mb-4"}
          id='url'
       >
         Submit
@@ -96,14 +106,14 @@ export default function InputUrl() {
 
       {/* Show the result from the API */}
       <p className="text-sm text-slate-700 mb-4">
-        {sub && sub.length > 0 ? "Detection Results:" : "No data received."}
+        {response && response.length > 0 ? "Detection Results:" : ""}
       </p>
 
 
       {/* Carousel of Images */}
       <div className="w-full flex justify-center mb-6">
-        {sub &&
-          sub.map((item, index) => (
+        {response &&
+          response.map((item, index) => (
             <div key={index} className="flex items-center mx-2">
               <img
                 src={`../../croped-Image/cropImage${index+1}.jpg`} // Adjust URL if needed
@@ -125,8 +135,8 @@ export default function InputUrl() {
             </tr>
           </thead>
           <tbody>
-            {sub &&
-              sub.map((item, index) => {
+            {response &&
+              response.map((item, index) => {
                 const { helmetViolation, numberPlate } = getViolationStatus(
                   item.detectionResult.predictions
                 );

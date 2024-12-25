@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { UploadModule } from './upload/upload.module';
 import { DetectRiderModule } from './detect-rider/detect-rider.module';
 import { DetectViolationModule } from './detect-violation/detect-violation.module';
-import { OcrModule } from './ocr/ocr.module';
 import { ImageProcessingModule } from './image-processing/image-processing.module';
 import { DriverModule } from './driver/driver.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -15,7 +14,6 @@ import { join } from 'path';
     UploadModule,
     DetectRiderModule,
     DetectViolationModule,
-    OcrModule,
     ImageProcessingModule,
     DriverModule,
     ServeStaticModule.forRoot({

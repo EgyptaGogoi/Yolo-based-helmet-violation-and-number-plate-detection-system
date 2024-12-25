@@ -41,7 +41,7 @@ export default function InputUrl() {
   }
 
   // Helper function to determine violation status
-  const getViolationStatus = async(predictions) => {
+  const getViolationStatus = (predictions) => {
     let helmetViolation = "No Violation";
     let numberPlate = "No Plate Detected";
     
